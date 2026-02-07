@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zen Student Clock - A beautiful, distraction-free productivity timer with Pomodoro technique, countdown timer, stopwatch, and deadline tracker. Perfect for students, studying, focus sessions, and time management.">
+    <meta name="keywords" content="pomodoro timer, study timer, focus timer, student clock, productivity tool, zen clock, minimalist timer, study app">
+    <title>Zen Student Clock - Focus Timer & Pomodoro for Students</title>
+    <style>
+        /* ========== THEME VARIABLES ========== */
+        :root {
+            /* Default: Zen Green */
+            --bg-color: #e8f5e9;
+            --text-main: #1b5e20;
+            --text-faint: #a5d6a7;
+            --accent: #2e7d32;
+            --glass-bg: rgba(255,255,255,0.6);
+            --glass-border: rgba(255,255,255,0.3);
+            --overlay-start: rgba(232, 245, 233, 0.8);
+        }
+
+        /* ===== LIGHT THEMES ===== */
+        
+        /* Calm Blue */
+        [data-theme="blue"] {
+            --bg-color: #e3f2fd;
+            --text-main: #0d47a1;
+            --text-faint: #90caf9;
+            --accent: #1976d2;
+            --glass-bg: rgba(255,255,255,0.7);
+            --glass-border: rgba(255,255,255,0.3);
+            --overlay-start: rgba(227, 242, 253, 0.85);
+        }
+
+        /* Paper Beige */
+        [data-theme="beige"] {
+            --bg-color: #fdf6e3;
+            --text-main: #5d4037;
+            --text-faint: #d7ccc8;
+            --accent: #8d6e63;
+            --glass-bg: rgba(255,255,255,0.85);
+            --glass-border: rgba(0,0,0,0.04);
+            --overlay-start: rgba(253, 246, 227, 0.9);
+        }
+
+        /* Slate Grey */
+        [data-theme="slate"] {
+            --bg-color: #eceff1;
+            --text-main: #263238;
+            --text-faint: #b0bec5;
+            --accent: #455a64;
+            --glass-bg: rgba(255,255,255,0.7);
+            --glass-border: rgba(0,0,0,0.04);
+            --overlay-start: rgba(236, 239, 241, 0.8);
+        }
+
+        /* Lavender Dream */
+        [data-theme="lavender"] {
+            --bg-color: #f3e5f5;
+            --text-main: #4a148c;
+            --text-faint: #ce93d8;
+            --accent: #7b1fa2;
+            --glass-bg: rgba(255,255,255,0.7);
+            --glass-border: rgba(255,255,255,0.3);
+            --overlay-start: rgba(243, 229, 245, 0.85);
+        }
+
+        /* Sunset Peach */
+        [data-theme="peach"] {
+            --bg-color: #fff3e0;
+            --text-main: #e65100;
+            --text-faint: #ffcc80;
+            --accent: #f57c00;
+            --glass-bg: rgba(255,255,255,0.75);
+            --glass-border: rgba(255,255,255,0.3);
+            --overlay-start: rgba(255, 243, 224, 0.85);
+        }
+
+        /* Mint Fresh */
+        [data-theme="mint"] {
+            --bg-color: #e0f2f1;
+            --text-main: #004d40;
+            --text-faint: #80cbc4;
+            --accent: #00695c;
+            --glass-bg: rgba(255,255,255,0.7);
+            --glass-border: rgba(255,255,255,0.3);
+            --overlay-start: rgba(224, 242, 241, 0.85);
+        }
+
+        /* ===== DARK THEMES ===== */
+
+        /* Classic Dark */
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #e5e7eb;
+            --text-faint: #64748b;
+            --accent: #38bdf8;
+            --glass-bg: rgba(30,41,59,0.6);
+            --glass-border: rgba(255,255,255,0.06);
+            --overlay-start: rgba(15, 23, 42, 0.7);
+        }
+
+        /* Deep Purple Night */
+        [data-theme="purple-dark"] {
+            --bg-color: #1a0033;
+            --text-main: #e1bee7;
+            --text-faint: #6a1b9a;
+            --accent: #ab47bc;
+            --glass-bg: rgba(74,20,140,0.3);
+            --glass-border: rgba(171,71,188,0.2);
+            --overlay-start: rgba(26, 0, 51, 0.75);
+        }
+
+        /* Forest Night */
+        [data-theme="forest-dark"] {
+            --bg-color: #0d1b0d;
+            --text-main: #c8e6c9;
+            --text-faint: #2e7d32;
+            --accent: #66bb6a;
+            --glass-bg: rgba(27,94,32,0.25);
+            --glass-border: rgba(102,187,106,0.15);
+            --overlay-start: rgba(13, 27, 13, 0.75);
+        }
+
+        /* Ocean Deep */
+        [data-theme="ocean-dark"] {
+            --bg-color: #001a33;
+            --text-main: #b3e5fc;
+            --text-faint: #01579b;
+            --accent: #0288d1;
+            --glass-bg: rgba(1,87,155,0.25);
+            --glass-border: rgba(2,136,209,0.2);
+            --overlay-start: rgba(0, 26, 51, 0.75);
+        }
+
+        /* Midnight Amber */
+        [data-theme="amber-dark"] {
+            --bg-color: #1a0f00;
+            --text-main: #ffe082;
+            --text-faint: #ff6f00;
+            --accent: #ffa726;
+            --glass-bg: rgba(255,111,0,0.2);
+            --glass-border: rgba(255,167,38,0.15);
+            --overlay-start: rgba(26, 15, 0, 0.75);
+        }
+
+        /* Cherry Blossom Dark */
+        [data-theme="cherry-dark"] {
+            --bg-color: #1a0a0f;
+            --text-main: #f8bbd0;
+            --text-faint: #880e4f;
+            --accent: #ec407a;
+            --glass-bg: rgba(136,14,79,0.25);
+            --glass-border: rgba(236,64,122,0.2);
+            --overlay-start: rgba(26, 10, 15, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- THE CLOCK (Always Visible) --- */
+        .clock-container {
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
+        }
+
+        .time-display {
+            font-size: 18vw;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            letter-spacing: -5px;
+            transition: all 0.3s ease;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-left: -2vw;
+        }
+
+        .seconds-display {
+            font-size: 0.4em;
+            opacity: 0.6;
+            margin-left: 10px;
+            font-weight: 300;
+            display: inline-block;
+        }
+
+        .seconds-display.hidden-visually {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #clockStatus {
+            font-size: 2vw;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-top: -10px;
+            min-height: 3vw;
+        }
+
+        /* --- THE UI OVERLAY (Fades Out) --- */
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 40px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .ui-layer.faded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .ui-layer:not(.faded) {
+            background: radial-gradient(circle at center, var(--overlay-start) 0%, transparent 70%);
+        }
+
+        /* --- Top Navigation --- */
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 30px;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background-color: var(--text-main);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        /* About Button (top right) */
+        .about-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 30px;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .about-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        /* --- Center Controls --- */
+        .controls-area {
+            position: absolute;
+            top: 68%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 650px;
+            padding: 0 20px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 14px 28px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+        }
+
+        .label-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        input[type="number"], input[type="time"] {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            width: 50px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 2px solid transparent;
+        }
+        
+        input[type="time"] {
+            width: auto;
+            font-size: 1.3rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom: 2px solid var(--text-main);
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button.action-btn {
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border: none;
+            background: var(--text-main);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button.action-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(0.95);
+        }
+
+        button.secondary {
+            background: var(--glass-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+        button.secondary:hover {
+            background: var(--glass-bg);
+            filter: brightness(1.03);
+        }
+
+        /* --- Bottom Options --- */
+        .bottom-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toggle-label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s;
+        }
+
+        .toggle-label:hover {
+            transform: translateY(-1px);
+        }
+
+        select#themeSelector {
+            padding: 10px 16px;
+            border-radius: 25px;
+            border: none;
+            font-size: 0.9rem;
+            background: var(--glass-bg);
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            font-weight: 500;
+        }
+
+        /* --- Helper Classes --- */
+        .mode-ui { 
+            display: none; 
+        }
+        .mode-ui.active { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%; 
+        }
+
+        /* --- About Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 2px solid var(--glass-border);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .modal-content h3 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .modal-content p, .modal-content ul {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .modal-content ul {
+            padding-left: 20px;
+        }
+
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-faint);
+            transition: color 0.2s;
+            line-height: 1;
+            margin-top: -10px;
+        }
+
+        .close-modal:hover {
+            color: var(--text-main);
+        }
+
+        /* Pomodoro Confirmation Dialog */
+        .pomo-dialog {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 2px solid var(--glass-border);
+            text-align: center;
+            min-width: 350px;
+        }
+
+        .pomo-dialog.show {
+            display: block;
+        }
+
+        .pomo-dialog h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .pomo-dialog p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .pomo-dialog button {
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            margin: 0 8px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .pomo-dialog .btn-primary {
+            background: var(--text-main);
+            color: white;
+        }
+
+        .pomo-dialog .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+
+        .pomo-dialog button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .time-display {
+                font-size: 22vw;
+            }
+            #clockStatus {
+                font-size: 4vw;
+            }
+            .tab-btn, .about-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            .controls-area {
+                top: 70%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clock-container">
+        <div class="time-display" id="mainDisplay">
+            00:25<span class="seconds-display" id="secSpan">:00</span>
+        </div>
+        <div id="clockStatus"></div>
+    </div>
+
+    <div class="ui-layer" id="uiLayer">
+
+        <div class="top-section">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchMode('timer')">Timer</button>
+                <button class="tab-btn" onclick="switchMode('pomodoro')">Pomodoro</button>
+                <button class="tab-btn" onclick="switchMode('stopwatch')">Stopwatch</button>
+                <button class="tab-btn" onclick="switchMode('until')">Deadline</button>
+            </div>
+            <button class="about-btn" onclick="openAbout()">ℹ️ About</button>
+        </div>
+
+        <div class="controls-area">
+
+            <div id="timer-ui" class="mode-ui active">
+                <div class="input-group" id="timerInputs">
+                    <span class="label-text">H:</span><input type="number" id="t-h" placeholder="00" value="00">
+                    <span class="label-text">M:</span><input type="number" id="t-m" placeholder="25" value="25">
+                    <span class="label-text">S:</span><input type="number" id="t-s" placeholder="00" value="00">
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" id="timerStartBtn" onclick="startTimer()">Start Timer</button>
+                    <button class="action-btn secondary" onclick="resetTimer()">Reset</button>
+                </div>
+            </div>
+
+            <div id="pomodoro-ui" class="mode-ui">
+                <div class="input-group" id="pomoInputs">
+                    <span class="label-text">Focus (min):</span>
+                    <input type="number" id="pomo-focus" value="25">
+                    <span style="opacity:0.4; margin:0 10px;">|</span>
+                    <span class="label-text">Break (min):</span>
+                    <input type="number" id="pomo-break" value="5">
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" id="pomoStartBtn" onclick="startPomodoro()">Start Focus</button>
+                    <button class="action-btn secondary" onclick="resetPomodoro()">Stop</button>
+                </div>
+                <p style="margin-top:10px; font-size:0.85rem; opacity:0.7;">🔔 Notifications & Audio enabled</p>
+            </div>
+
+            <div id="stopwatch-ui" class="mode-ui">
+                <div class="action-buttons">
+                    <button class="action-btn" id="swStartBtn" onclick="toggleStopwatch()">Start Stopwatch</button>
+                    <button class="action-btn secondary" onclick="resetStopwatch()">Reset</button>
+                </div>
+            </div>
+
+            <div id="until-ui" class="mode-ui">
+                <div class="input-group" id="untilInputGroup">
+                    <input type="time" id="targetTimeInput">
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="startUntil()">Set Target</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom-bar">
+            <label class="toggle-label">
+                <input type="checkbox" id="chkSeconds" checked onchange="toggleSeconds()">
+                Show Seconds
+            </label>
+            <label class="toggle-label">
+                <input type="checkbox" onchange="toggleFullscreen()">
+                Full Screen
+            </label>
+
+            <select id="themeSelector" onchange="setTheme(this.value)">
+                <optgroup label="Light Themes">
+                    <option value="default">🌿 Zen Green</option>
+                    <option value="blue">🌊 Calm Blue</option>
+                    <option value="beige">📜 Paper Beige</option>
+                    <option value="slate">⚪ Slate Grey</option>
+                    <option value="lavender">🌸 Lavender Dream</option>
+                    <option value="peach">🍑 Sunset Peach</option>
+                    <option value="mint">🌱 Mint Fresh</option>
+                </optgroup>
+                <optgroup label="Dark Themes">
+                    <option value="dark">🌙 Classic Dark</option>
+                    <option value="purple-dark">🔮 Deep Purple</option>
+                    <option value="forest-dark">🌲 Forest Night</option>
+                    <option value="ocean-dark">🌊 Ocean Deep</option>
+                    <option value="amber-dark">🔥 Midnight Amber</option>
+                    <option value="cherry-dark">🌺 Cherry Blossom</option>
+                </optgroup>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- Pomodoro Confirmation Dialog -->
+    <div class="pomo-dialog" id="pomoDialog">
+        <h3 id="pomoDialogTitle">Great Job! 🎉</h3>
+        <p id="pomoDialogMessage">You've completed your focus session. Ready for a break?</p>
+        <div>
+            <button class="btn-primary" onclick="confirmPomoPhase()">Yes, Continue</button>
+            <button class="btn-secondary" onclick="cancelPomoPhase()">Stop</button>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAbout()">&times;</span>
+            <h2>⏰ Zen Student Clock</h2>
+            <p><strong>The Ultimate Focus & Productivity Timer for Students</strong></p>
+            
+            <h3>📚 What is Zen Student Clock?</h3>
+            <p>Zen Student Clock is a beautiful, distraction-free productivity timer designed specifically for students and anyone who wants to improve their focus, time management, and study habits. It combines the power of the Pomodoro Technique with versatile timing tools in a calming, minimalist interface.</p>
+
+            <h3>✨ Cool Features</h3>
+            <ul>
+                <li><strong>Pomodoro Technique:</strong> Structured focus sessions with automatic break reminders. Work for 25 minutes, break for 5 - scientifically proven to boost productivity!</li>
+                <li><strong>Smart Confirmation:</strong> After each Pomodoro phase, the timer pauses and asks for your confirmation before switching - no auto-interruptions!</li>
+                <li><strong>Countdown Timer:</strong> Set custom timers for exams, assignments, or any time-based tasks</li>
+                <li><strong>Stopwatch Mode:</strong> Track how long you spend on each subject or activity</li>
+                <li><strong>Deadline Tracker:</strong> Count down to your exam time or assignment deadline</li>
+                <li><strong>13 Beautiful Themes:</strong> Choose from calming colors scientifically selected to enhance focus - including Zen Green, Calm Blue, Paper Beige, and multiple dark modes</li>
+                <li><strong>Zen Auto-Hide UI:</strong> Controls fade away after 3 seconds, leaving only the clock for pure focus</li>
+                <li><strong>Browser Notifications:</strong> Get notified even when you're in another tab</li>
+                <li><strong>Audio Chimes:</strong> Gentle sound alerts when timers complete</li>
+                <li><strong>Full Screen Mode:</strong> Eliminate all distractions</li>
+                <li><strong>No Installation Required:</strong> Works directly in your browser - bookmark and use anywhere!</li>
+            </ul>
+
+            <h3>👨‍💻 Who Made This?</h3>
+            <p>Zen Student Clock was created by a developer who understands the struggles of staying focused in our distraction-filled digital world. Built with students in mind, it combines productivity research (like the Pomodoro Technique) with clean design principles.</p>
+
+            <h3>🎯 Who Is It For?</h3>
+            <ul>
+                <li>Students preparing for exams and managing study sessions</li>
+                <li>Anyone using the Pomodoro Technique for focused work</li>
+                <li>Remote workers and freelancers who need structured time management</li>
+                <li>People with ADHD who benefit from timed focus periods</li>
+                <li>Anyone who wants a beautiful, distraction-free timer</li>
+            </ul>
+
+            <h3>🚀 Why Choose Zen Student Clock?</h3>
+            <p>Unlike complex productivity apps, Zen Student Clock focuses on doing one thing perfectly: helping you manage your time with minimal distractions. No accounts, no subscriptions, no data collection - just pure, focused productivity.</p>
+
+            <p style="margin-top: 30px; text-align: center; opacity: 0.7; font-size: 0.9rem;">
+                Made with ❤️ for students everywhere<br>
+                v1.0 | Free Forever | Open Source
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- UI & AUTO HIDE ---
+        const uiLayer = document.getElementById('uiLayer');
+        let idleTimer;
+
+        function showUI() {
+            uiLayer.classList.remove('faded');
+            resetIdleTimer();
+        }
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                uiLayer.classList.add('faded');
+            }, 3000);
+        }
+
+        ['mousemove', 'click', 'keydown', 'touchstart'].forEach(evt =>
+            document.addEventListener(evt, showUI)
+        );
+        resetIdleTimer();
+
+        // --- ABOUT MODAL ---
+        function openAbout() {
+            document.getElementById('aboutModal').classList.add('show');
+        }
+
+        function closeAbout() {
+            document.getElementById('aboutModal').classList.remove('show');
+        }
+
+        // --- NOTIFICATION & SOUND SYSTEM (GitHub-optimized) ---
+        let audioCtx = null;
+        let notificationPermission = false;
+
+        // Initialize audio context on first user interaction
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function requestNotifyPermission() {
+            if ("Notification" in window && Notification.permission === "default") {
+                Notification.requestPermission().then(function(permission) {
+                    notificationPermission = (permission === "granted");
+                });
+            } else if (Notification.permission === "granted") {
+                notificationPermission = true;
+            }
+        }
+
+        function playChime() {
+            initAudioContext();
+            if (!audioCtx) return;
+
+            try {
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.5);
+            } catch (e) {
+                console.log('Audio playback failed:', e);
+            }
+        }
+
+        function sendNotification(title, body) {
+            // Always play chime
+            playChime();
+            
+            // Try browser notification
+            if ("Notification" in window && notificationPermission) {
+                try {
+                    new Notification(title, { 
+                        body: body, 
+                        icon: '',
+                        requireInteraction: false
+                    });
+                } catch (e) {
+                    console.log('Notification failed:', e);
+                }
+            }
+        }
+
+        // --- CORE CLOCK LOGIC ---
+        let interval = null;
+        let mode = 'timer';
+        const mainDisplay = document.getElementById('mainDisplay');
+        const secSpan = document.getElementById('secSpan');
+        const statusDisplay = document.getElementById('clockStatus');
+
+        function updateDisplay(h, m, s) {
+            const hh = h < 10 ? '0'+h : h;
+            const mm = m < 10 ? '0'+m : m;
+            const ss = s < 10 ? '0'+s : s;
+            mainDisplay.childNodes[0].nodeValue = `${hh}:${mm}`;
+            secSpan.innerText = `:${ss}`;
+        }
+
+        function formatTotalSeconds(totalSec) {
+            const h = Math.floor(totalSec / 3600);
+            const m = Math.floor((totalSec % 3600) / 60);
+            const s = Math.floor(totalSec % 60);
+            updateDisplay(h, m, s);
+        }
+
+        function switchMode(newMode) {
+            clearInterval(interval);
+            mode = newMode;
+            statusDisplay.innerText = "";
+
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const tabs = ['timer', 'pomodoro', 'stopwatch', 'until'];
+            document.querySelectorAll('.tab-btn')[tabs.indexOf(newMode)].classList.add('active');
+
+            document.querySelectorAll('.mode-ui').forEach(u => u.classList.remove('active'));
+            document.getElementById(`${newMode}-ui`).classList.add('active');
+
+            if(mode === 'timer') resetTimer();
+            if(mode === 'stopwatch') resetStopwatch();
+            if(mode === 'pomodoro') resetPomodoro();
+            if(mode === 'until') {
+                updateDisplay(0,0,0);
+                mainDisplay.childNodes[0].nodeValue = "--:--";
+                secSpan.innerText = ":--";
+                statusDisplay.innerText = "When is your deadline?";
+            }
+        }
+
+        // --- POMODORO LOGIC (WITH CONFIRMATION) - GitHub-optimized ---
+        let pomoState = 'idle'; // idle, focus, break, waiting
+        let pomoEndTime = 0;
+        let pomoFocusMin = 25;
+        let pomoBreakMin = 5;
+        let pomoStartTime = 0; // Track when phase started
+        const pomoDialog = document.getElementById('pomoDialog');
+        const pomoDialogTitle = document.getElementById('pomoDialogTitle');
+        const pomoDialogMessage = document.getElementById('pomoDialogMessage');
+
+        function startPomodoro() {
+            // Initialize on first click
+            initAudioContext();
+            requestNotifyPermission();
+
+            pomoFocusMin = parseInt(document.getElementById('pomo-focus').value) || 25;
+            pomoBreakMin = parseInt(document.getElementById('pomo-break').value) || 5;
+
+            if (pomoState === 'idle') {
+                pomoState = 'focus';
+                const totalSec = pomoFocusMin * 60;
+                pomoStartTime = Date.now();
+                pomoEndTime = pomoStartTime + (totalSec * 1000);
+                document.getElementById('pomoInputs').style.display = 'none';
+                document.getElementById('pomoStartBtn').style.display = 'none';
+                statusDisplay.innerText = "Focus Session 🧠";
+                runPomodoroTimer();
+            }
+        }
+
+        function runPomodoroTimer() {
+            clearInterval(interval);
+            
+            // Use requestAnimationFrame for more accurate timing
+            let lastUpdate = Date.now();
+            
+            interval = setInterval(() => {
+                const now = Date.now();
+                
+                // Detect if tab was inactive (time jump > 2 seconds)
+                if (now - lastUpdate > 2000) {
+                    // Recalculate based on actual time
+                    console.log('Tab was inactive, recalculating...');
+                }
+                lastUpdate = now;
+                
+                const diff = Math.ceil((pomoEndTime - now) / 1000);
+
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    
+                    // Phase completed - show confirmation dialog
+                    if (pomoState === 'focus') {
+                        sendNotification("Great Job! 🎉", "Focus session complete. Time for a " + pomoBreakMin + " min break!");
+                        pomoDialogTitle.innerText = "Focus Complete! 🎉";
+                        pomoDialogMessage.innerText = `You've worked for ${pomoFocusMin} minutes. Ready for a ${pomoBreakMin}-minute break?`;
+                        pomoDialog.classList.add('show');
+                        formatTotalSeconds(0);
+                        statusDisplay.innerText = "Waiting for confirmation...";
+                    } else if (pomoState === 'break') {
+                        sendNotification("Break Over ⏰", "Ready to focus again?");
+                        pomoDialogTitle.innerText = "Break Complete! ☕";
+                        pomoDialogMessage.innerText = `You've rested for ${pomoBreakMin} minutes. Ready for another ${pomoFocusMin}-minute focus session?`;
+                        pomoDialog.classList.add('show');
+                        formatTotalSeconds(0);
+                        statusDisplay.innerText = "Waiting for confirmation...";
+                    }
+                    
+                } else {
+                    formatTotalSeconds(diff);
+                }
+            }, 100); // Update every 100ms for smooth display
+        }
+
+        function confirmPomoPhase() {
+            pomoDialog.classList.remove('show');
+            
+            if (pomoState === 'focus') {
+                // Switch to break
+                pomoState = 'break';
+                pomoStartTime = Date.now();
+                pomoEndTime = pomoStartTime + (pomoBreakMin * 60 * 1000);
+                statusDisplay.innerText = "Break Time ☕";
+            } else {
+                // Switch to focus
+                pomoState = 'focus';
+                pomoStartTime = Date.now();
+                pomoEndTime = pomoStartTime + (pomoFocusMin * 60 * 1000);
+                statusDisplay.innerText = "Focus Session 🧠";
+            }
+            
+            runPomodoroTimer();
+        }
+
+        function cancelPomoPhase() {
+            pomoDialog.classList.remove('show');
+            resetPomodoro();
+        }
+
+        function resetPomodoro() {
+            clearInterval(interval);
+            pomoState = 'idle';
+            pomoDialog.classList.remove('show');
+            document.getElementById('pomoInputs').style.display = 'flex';
+            document.getElementById('pomoStartBtn').style.display = 'block';
+            statusDisplay.innerText = "";
+            const focusMin = parseInt(document.getElementById('pomo-focus').value) || 25;
+            updateDisplay(0, focusMin, 0);
+        }
+
+        // --- TIMER LOGIC ---
+        let timerEndTimestamp = 0;
+        let isTimerRunning = false;
+        let timerRemaining = 0;
+
+        function startTimer() {
+            initAudioContext(); // Initialize on first interaction
+            
+            if(isTimerRunning) {
+                isTimerRunning = false;
+                clearInterval(interval);
+                timerRemaining = Math.ceil((timerEndTimestamp - Date.now()) / 1000);
+                document.getElementById('timerStartBtn').innerText = "Resume";
+                statusDisplay.innerText = "Timer Paused";
+                return;
+            }
+
+            const h = parseInt(document.getElementById('t-h').value) || 0;
+            const m = parseInt(document.getElementById('t-m').value) || 0;
+            const s = parseInt(document.getElementById('t-s').value) || 0;
+
+            let totalSec;
+            if (timerRemaining > 0) {
+                totalSec = timerRemaining;
+            } else {
+                totalSec = (h * 3600) + (m * 60) + s;
+            }
+
+            if(totalSec <= 0) return;
+            
+            timerEndTimestamp = Date.now() + (totalSec * 1000);
+            isTimerRunning = true;
+            document.getElementById('timerStartBtn').innerText = "Pause";
+            document.getElementById('timerInputs').style.display = 'none';
+            statusDisplay.innerText = "Timer Running ⏱️";
+
+            interval = setInterval(() => {
+                const diff = Math.ceil((timerEndTimestamp - Date.now()) / 1000);
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    isTimerRunning = false;
+                    formatTotalSeconds(0);
+                    sendNotification("Timer Complete! ✅", "Your timer has finished.");
+                    resetTimer();
+                } else {
+                    formatTotalSeconds(diff);
+                }
+            }, 100);
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            isTimerRunning = false;
+            timerEndTimestamp = 0;
+            timerRemaining = 0;
+            document.getElementById('timerStartBtn').innerText = "Start Timer";
+            document.getElementById('timerInputs').style.display = 'flex';
+            statusDisplay.innerText = "";
+            updateDisplay(0, parseInt(document.getElementById('t-m').value)||25, 0);
+        }
+
+        // --- STOPWATCH LOGIC ---
+        let swStart = 0;
+        let swElapsed = 0;
+        let swRunning = false;
+
+        function toggleStopwatch() {
+            if(swRunning) {
+                swRunning = false;
+                clearInterval(interval);
+                swElapsed = Date.now() - swStart;
+                document.getElementById('swStartBtn').innerText = "Resume";
+                statusDisplay.innerText = "Stopwatch Paused";
+            } else {
+                swRunning = true;
+                swStart = Date.now() - swElapsed;
+                document.getElementById('swStartBtn').innerText = "Pause";
+                statusDisplay.innerText = "Stopwatch Running ⏱️";
+                interval = setInterval(() => {
+                    formatTotalSeconds(Math.floor((Date.now() - swStart)/1000));
+                }, 100);
+            }
+        }
+
+        function resetStopwatch() {
+            swRunning = false;
+            clearInterval(interval);
+            swElapsed = 0;
+            formatTotalSeconds(0);
+            document.getElementById('swStartBtn').innerText = "Start Stopwatch";
+            statusDisplay.innerText = "";
+        }
+
+        // --- DEADLINE LOGIC ---
+        function startUntil() {
+            const input = document.getElementById('targetTimeInput').value;
+            if(!input) return;
+            clearInterval(interval);
+
+            const now = new Date();
+            const [th, tm] = input.split(':').map(Number);
+            let target = new Date();
+            target.setHours(th, tm, 0, 0);
+            if(target < now) target.setDate(target.getDate() + 1);
+
+            document.getElementById('untilInputGroup').style.display = 'none';
+            statusDisplay.innerText = `Deadline: ${input} 🎯`;
+
+            interval = setInterval(() => {
+                const diff = Math.ceil((target - Date.now()) / 1000);
+                if(diff <= 0) {
+                    clearInterval(interval);
+                    formatTotalSeconds(0);
+                    statusDisplay.innerText = "Deadline Reached! ⏰";
+                    sendNotification("Deadline Reached! ⏰", "Time's up!");
+                } else {
+                    formatTotalSeconds(diff);
+                }
+            }, 100);
+        }
+
+        // --- OPTIONS ---
+        function toggleSeconds() {
+            const chk = document.getElementById('chkSeconds');
+            if(chk.checked) secSpan.classList.remove('hidden-visually');
+            else secSpan.classList.add('hidden-visually');
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                document.body.classList.add('fullscreen-mode');
+            } else {
+                if(document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.body.classList.remove('fullscreen-mode');
+                }
+            }
+        }
+
+        // --- THEME SWITCHER ---
+        const docRoot = document.documentElement;
+        const themeSelect = document.getElementById('themeSelector');
+
+        function setTheme(theme) {
+            if (!theme || theme === 'default') {
+                docRoot.removeAttribute('data-theme');
+            } else {
+                docRoot.setAttribute('data-theme', theme);
+            }
+            try {
+                localStorage.setItem('zenTheme', theme);
+            } catch (e) {
+                console.log('localStorage not available');
+            }
+        }
+
+        (function loadSavedTheme() {
+            try {
+                const saved = localStorage.getItem('zenTheme');
+                if (saved) {
+                    if (saved === 'default') {
+                        docRoot.removeAttribute('data-theme');
+                        themeSelect.value = 'default';
+                    } else {
+                        docRoot.setAttribute('data-theme', saved);
+                        themeSelect.value = saved;
+                    }
+                } else {
+                    themeSelect.value = 'default';
+                }
+            } catch (e) {
+                themeSelect.value = 'default';
+            }
+        })();
+
+        // --- PAGE VISIBILITY API (Detect tab switching) ---
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        });
+    </script>
+</body>
+</html>
